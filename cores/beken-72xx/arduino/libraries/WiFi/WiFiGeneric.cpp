@@ -112,7 +112,6 @@ bool WiFiClass::setSleep(bool enable) {
 	LT_DM(WIFI, "WiFi sleep mode %u", enable);
 	if (enable) {
 		bk_wlan_dtim_rf_ps_mode_enable();
-		bk_wlan_mcu_ps_mode_enable();
 	} else {
 		bk_wlan_dtim_rf_ps_mode_disable();
 		bk_wlan_mcu_ps_mode_disable();
