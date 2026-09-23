@@ -92,11 +92,20 @@ uint16_t analogReadVoltage(pin_size_t pinNumber) {
 	uint8_t run_stop = 0; // stop
 	ddev_control(handle, SARADC_CMD_RUN_OR_STOP_ADC, &run_stop);
 	ddev_close(handle);
+#if CFG_SOC_NAME == SOC_BK7231N
+	// the SDK sets GPIO channels to a 2048-count scale over 2.4 V
+	return (uint32_t)adcData[0] * 2400 / 2048;
+#else
 	return adcData[0];
+#endif
 }
 
 uint16_t analogReadMaxVoltage(pin_size_t pinNumber) {
+#if CFG_SOC_NAME == SOC_BK7231N
+	return 2400;
+#else
 	return 3300;
+#endif
 }
 
 #if CFG_BDK_USE_NEW_PWM_DRIVER
